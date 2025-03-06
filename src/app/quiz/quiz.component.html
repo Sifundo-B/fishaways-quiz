@@ -1,15 +1,19 @@
-<div class="container mt-5">
-  <div *ngIf="!quizFinished">
-    <h2>{{ questions[currentQuestionIndex].question }}</h2>
-    <div *ngFor="let option of questions[currentQuestionIndex].options" class="form-check">
-      <input class="form-check-input" type="radio" name="quizOption" [value]="option" (change)="selectOption(option)">
-      <label class="form-check-label">{{ option }}</label>
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div *ngIf="!quizFinished" class="card p-3">
+        <h2 class="text-center">{{ questions[currentQuestionIndex].question }}</h2>
+        <div *ngFor="let option of questions[currentQuestionIndex].options" class="form-check">
+          <input class="form-check-input" type="radio" name="quizOption" [value]="option" (change)="selectOption(option)">
+          <label class="form-check-label">{{ option }}</label>
+        </div>
+        <button class="btn btn-primary mt-3 w-100" (click)="nextQuestion()">Next</button>
+      </div>
+      <div *ngIf="quizFinished" class="card p-3 text-center">
+        <h2>Quiz Finished!</h2>
+        <p>Your score: {{ score }} / {{ questions.length }}</p>
+        <button class="btn btn-primary w-100" routerLink="/">Back to Home</button>
+      </div>
     </div>
-    <button class="btn btn-primary mt-3" (click)="nextQuestion()">Next</button>
-  </div>
-  <div *ngIf="quizFinished" class="text-center">
-    <h2>Quiz Finished!</h2>
-    <p>Your score: {{ score }} / {{ questions.length }}</p>
-    <button class="btn btn-primary" routerLink="">Back to Home</button>
   </div>
 </div>

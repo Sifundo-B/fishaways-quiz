@@ -1,9 +1,15 @@
+/* General styles */
 body {
   font-family: Arial, sans-serif;
   background-color: #f0f8ff; /* Light blue background */
   color: #333; /* Dark text */
 }
 
+.container {
+  padding: 20px;
+}
+
+/* Navbar styles */
 .navbar {
   background-color: #0077b6; /* Fishaways blue */
   color: white;
@@ -13,6 +19,16 @@ body {
   color: white !important;
 }
 
+/* Quiz card styles */
+.card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* Button styles */
 .btn-primary {
   background-color: #ff6b35; /* Fishaways orange */
   border-color: #ff6b35;
@@ -23,20 +39,31 @@ body {
   border-color: #ff4500;
 }
 
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Media queries for mobile responsiveness */
+@media (max-width: 767.98px) {
+  h2 {
+    font-size: 1.5rem; /* Smaller font size for mobile */
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .btn {
+    font-size: 0.9rem; /* Smaller button text for mobile */
+  }
 }
 
-h2 {
-  color: #0077b6; /* Fishaways blue */
-}
+@media (max-width: 575.98px) {
+  h2 {
+    font-size: 1.25rem; /* Even smaller font size for very small screens */
+  }
 
-.form-check-input:checked {
-  background-color: #ff6b35; /* Fishaways orange */
-  border-color: #ff6b35;
+  .card {
+    padding: 10px;
+  }
+
+  .btn {
+    font-size: 0.8rem; /* Smaller button text for very small screens */
+  }
 }
