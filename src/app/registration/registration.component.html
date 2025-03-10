@@ -1,0 +1,29 @@
+<div class="container mt-5 text-center">
+    <h2>Register to Take the Quiz</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          [(ngModel)]="user.name"
+          name="name"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="store">Select Your Store</label>
+        <select
+          class="form-control"
+          id="store"
+          [(ngModel)]="user.store"
+          name="store"
+          required
+        >
+          <option *ngFor="let store of stores" [value]="store">{{ store }}</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary mt-3">Start Quiz</button>
+    </form>
+  </div>

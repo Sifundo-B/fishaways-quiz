@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Import CommonModule
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { UserService } from '../services/user.service';
+import { LeaderboardService } from '../services/leaderboard.service';
 
 @Component({
   selector: 'app-quiz',
@@ -12,34 +14,29 @@ import { RouterLink } from '@angular/router';
 export class QuizComponent {
   questions = [
     {
-      question: 'What is the safe minimum internal temperature for cooking fish?',
-      options: ['120°F', '135°F', '145°F', '160°F'],
-      answer: '145°F'
+      question: 'What is the minimum recommended time for handwashing?',
+      options: ['10 seconds', '20 seconds', '30 seconds', '40 seconds'],
+      answer: '20 seconds'
     },
     {
-      question: 'How long can cooked fish be safely stored in the refrigerator?',
-      options: ['1 day', '2 days', '3-4 days', '1 week'],
-      answer: '3-4 days'
+      question: 'Which part of the hands is often missed during handwashing?',
+      options: ['Palms', 'Fingertips', 'Back of hands', 'Between fingers'],
+      answer: 'Between fingers'
     },
     {
-      question: 'What is the best way to thaw frozen seafood?',
-      options: ['At room temperature', 'In hot water', 'In the refrigerator', 'In the microwave'],
-      answer: 'In the refrigerator'
+      question: 'What is the first step in the handwashing procedure?',
+      options: ['Apply soap', 'Rinse hands', 'Wet hands', 'Dry hands'],
+      answer: 'Wet hands'
     },
     {
-      question: 'Which of the following is a sign that seafood is fresh?',
-      options: ['Strong fishy odor', 'Dull eyes', 'Firm flesh', 'Slimy texture'],
-      answer: 'Firm flesh'
-    },
-    {
-      question: 'What is the primary cause of seafood-related foodborne illnesses?',
-      options: ['Viruses', 'Bacteria', 'Parasites', 'Toxins'],
-      answer: 'Bacteria'
-    },
-    {
-      question: 'How should raw seafood be stored in the refrigerator?',
-      options: ['On the top shelf', 'In a sealed container on the bottom shelf', 'Next to cooked food', 'In the freezer'],
-      answer: 'In a sealed container on the bottom shelf'
+      question: 'When should restaurant staff wash their hands?',
+      options: [
+        'Before handling food',
+        'After handling raw meat',
+        'After touching their face',
+        'All of the above'
+      ],
+      answer: 'All of the above'
     }
   ];
 
@@ -47,11 +44,17 @@ export class QuizComponent {
   selectedOption: string | null = null;
   score = 0;
 
-  selectOption(option: string) {
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private leaderboardService: LeaderboardService
+  ) {}
+
+  selectOption(option: string): void {
     this.selectedOption = option;
   }
 
-  nextQuestion() {
+  nextQuestion(): void {
     if (this.selectedOption === this.questions[this.currentQuestionIndex].answer) {
       this.score++;
     }
@@ -59,7 +62,19 @@ export class QuizComponent {
     this.selectedOption = null;
   }
 
-  get quizFinished() {
+  get quizFinished(): boolean {
     return this.currentQuestionIndex >= this.questions.length;
+  }
+
+  finishQuiz(): void {
+    const user = this.userService.getUser();
+    if (user) {
+      this.leaderboardService.addToLeaderboard({
+        name: user.name,
+        store: user.store,
+        score: this.score
+      });
+    }
+    this.router.navigate(['/leaderboard']);
   }
 }
